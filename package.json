@@ -1,0 +1,21 @@
+{
+  "name": "@tanuden/kumoha",
+  "version": "0.0.5",
+  "main": "lib/index.js",
+  "scripts": {
+    "build": "tsc"
+  },
+  "keywords": ["tanuden", "traincrew", "api"],
+  "author": "Haruyuki Tanukiji <haruyuki@tanu.ch>",
+  "license": "LGPL-2.1-only",
+  "description": "Theming Engine API for Tanuden TIMS",
+  "devDependencies": {
+    "@types/node": "^22.13.10",
+    "opentetsu": "^0.0.3",
+    "typescript": "^5.8.2"
+  },
+  "type": "module",
+  "dependencies": {
+    "socket.io-client": "^4.8.1"
+  }
+}

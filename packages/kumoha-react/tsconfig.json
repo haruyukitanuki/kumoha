@@ -1,0 +1,34 @@
+{
+  "include": ["src/**/*"],
+  "compilerOptions": {
+    "sourceMap": true,
+    "target": "ES5",
+    "module": "ESNext",
+    "moduleResolution": "node",
+    "lib": ["DOM", "ES6"],
+
+    "jsx": "react",
+
+    /* Linting */
+    "strict": true,
+    "skipLibCheck": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
+    "noUncheckedSideEffectImports": true,
+    "allowJs": true,
+
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "noUncheckedIndexedAccess": true,
+
+    "forceConsistentCasingInFileNames": true,
+    "noImplicitAny": true,
+
+    "declaration": true,
+    "declarationMap": true,
+
+    "rootDir": "src",
+    "outDir": "lib"
+  }
+}
