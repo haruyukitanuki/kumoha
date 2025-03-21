@@ -32,7 +32,6 @@ const useKumohaAPI = ({
     console.log("Kumoha API using " + uri);
 
     const gameDataListener = kumoha.getGameData((gameData) => {
-      console.log("Kumoha API data", gameData);
       setData({
         connected: kumoha.isConnected(),
         ...gameData,
