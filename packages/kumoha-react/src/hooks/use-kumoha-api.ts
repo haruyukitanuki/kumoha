@@ -3,9 +3,9 @@ import { GameDataState, Kumoha, KumohaEngineOptions } from "@tanuden/kumoha";
 
 export interface KumohaData {
   connected: boolean;
-  gameData?: GameDataState["gameData"];
-  gameState?: GameDataState["gameState"];
-  pluginData?: GameDataState["pluginData"];
+  gameData: GameDataState["gameData"];
+  gameState: GameDataState["gameState"];
+  pluginData: GameDataState["pluginData"];
 }
 
 const useKumohaAPI = ({
@@ -26,6 +26,9 @@ const useKumohaAPI = ({
 
   const [data, setData] = useState<KumohaData>({
     connected: false,
+    gameData: {} as GameDataState["gameData"],
+    gameState: {} as GameDataState["gameState"],
+    pluginData: {} as GameDataState["pluginData"],
   });
 
   useEffect(() => {
