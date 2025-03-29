@@ -2,7 +2,7 @@ import { io, ManagerOptions, Socket, SocketOptions } from "socket.io-client";
 import { KumohaError } from "./errors.js";
 import { OpenTetsuData } from "opentetsu";
 import { GameState } from "./types/opentetsu-additions/game-state.js";
-import { PluginMeta } from "./types/console/plugin-meta.js";
+import { PluginState } from "./types/console/plugin-meta.js";
 
 type LoginResponse = {
   deviceId: string;
@@ -18,7 +18,7 @@ export type KumohaEngineOptions = {
 export type GameDataState = {
   gameData: OpenTetsuData;
   gameState: GameState;
-  pluginData: Record<string, PluginMeta>;
+  pluginData: Record<string, PluginState>;
 };
 
 class KumohaEngine {
