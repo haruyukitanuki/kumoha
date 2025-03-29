@@ -26,16 +26,25 @@ const KumohaDataProvider = ({
   const kumohaAPI = useKumohaAPI({
     uri: kumohaUri,
     humanReadableRoomId: humanReadableRoomId,
+    options: {
+      socketOptions: {
+        autoConnect: sampleData ? false : true,
+      },
+    },
   });
 
   const data = useMemo(() => {
+    if (sampleData) {
+      return sampleData;
+    }
+
     return kumohaAPI;
-  }, [kumohaAPI.gameData]);
+  }, [sampleData, kumohaAPI.gameData]);
 
   return (
     <KumohaDataContext.Provider
       value={{
-        data: sampleData || data,
+        data,
       }}
     >
       {children}
