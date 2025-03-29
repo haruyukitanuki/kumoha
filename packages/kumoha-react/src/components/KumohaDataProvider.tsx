@@ -1,14 +1,16 @@
 import React, { ReactNode, useMemo } from "react";
-import { useKumohaAPI } from "../hooks/use-kumoha-api";
+import { KumohaData, useKumohaAPI } from "../hooks/use-kumoha-api";
 import { KumohaDataContext } from "../context";
 
 const KumohaDataProvider = ({
   kumohaUri,
   humanReadableRoomId: manualHumanReadableRoomId,
+  sampleData,
   children,
 }: {
   kumohaUri: string;
   humanReadableRoomId?: string;
+  sampleData?: KumohaData;
   children: ReactNode;
 }): ReactNode => {
   const humanReadableRoomId = useMemo(() => {
@@ -33,7 +35,7 @@ const KumohaDataProvider = ({
   return (
     <KumohaDataContext.Provider
       value={{
-        data,
+        data: sampleData || data,
       }}
     >
       {children}
