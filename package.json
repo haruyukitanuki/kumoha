@@ -1,9 +1,10 @@
 {
   "name": "@tanuden/kumoha",
-  "version": "0.0.7",
+  "version": "0.0.9",
   "main": "lib/index.js",
   "scripts": {
-    "build": "tsc"
+    "build": "rimraf lib && tsc",
+    "prepublish": "npm run build"
   },
   "keywords": [
     "tanuden",
@@ -16,6 +17,7 @@
   "devDependencies": {
     "@types/node": "^22.13.10",
     "opentetsu": "^0.0.6",
+    "rimraf": "^6.0.1",
     "typescript": "^5.8.2"
   },
   "type": "module",

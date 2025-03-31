@@ -4,6 +4,8 @@ import { OpenTetsuData } from "opentetsu";
 import { GameState } from "./types/opentetsu-additions/game-state.js";
 import { PluginState } from "./types/console/plugin-meta.js";
 
+type KumohaState = "ok" | "disconnected" | "auth-error" | "unknown-error";
+
 type LoginResponse = {
   deviceId: string;
   roomId: string;
@@ -25,6 +27,9 @@ class KumohaEngine {
   public socket: Socket;
   public metadata?: LoginResponse;
   public humanReadableRoomId?: string;
+  public state: KumohaState = "disconnected";
+  public data: GameDataState | undefined = undefined;
+  public dataListener: Socket | undefined = undefined;
 
   constructor(
     uri: string,
@@ -43,9 +48,24 @@ class KumohaEngine {
       this._catchAckErrors(data);
     });
 
-    this._authInit().then((response) => {
-      this.metadata = response;
-    });
+    this.login()
+      .then((response) => {
+        this.metadata = response;
+        this.state = "ok";
+      })
+      .catch((error) => {
+        if (error instanceof KumohaError) {
+          switch (error.name) {
+            case "KumohaError":
+              this.state = "auth-error";
+              break;
+            default:
+              this.state = "unknown-error";
+          }
+        } else {
+          this.state = "unknown-error";
+        }
+      });
   }
 
   private _catchAckErrors(data: Record<string, string>) {
@@ -54,7 +74,7 @@ class KumohaEngine {
     }
   }
 
-  private async _authInit(): Promise<LoginResponse> {
+  async login(): Promise<LoginResponse> {
     const response = await this.socket.emitWithAck("auth:login", {
       trafficRoomId: undefined,
       humanReadableRoomId: this.humanReadableRoomId,
