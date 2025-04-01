@@ -4,7 +4,11 @@ import { OpenTetsuData } from "opentetsu";
 import { GameState } from "./types/opentetsu-additions/game-state.js";
 import { PluginState } from "./types/console/plugin-meta.js";
 
-type KumohaState = "ok" | "disconnected" | "auth-error" | "unknown-error";
+export type KumohaState =
+  | "ok"
+  | "disconnected"
+  | "auth-error"
+  | "unknown-error";
 
 type LoginResponse = {
   deviceId: string;

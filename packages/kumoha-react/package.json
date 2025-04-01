@@ -9,7 +9,7 @@
   "author": "Haruyuki Tanukiji <haruyuki@tanu.ch>",
   "license": "LGPL-2.1-only",
   "dependencies": {
-    "@tanuden/kumoha": "^0.0.7",
+    "@tanuden/kumoha": "^0.0.11",
     "react": "^19.0.0"
   },
   "devDependencies": {

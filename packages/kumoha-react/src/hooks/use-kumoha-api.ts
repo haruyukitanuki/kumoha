@@ -1,12 +1,26 @@
 import { useEffect, useMemo, useState } from "react";
-import { GameDataState, Kumoha, KumohaEngineOptions } from "@tanuden/kumoha";
+import {
+  GameDataState,
+  Kumoha,
+  KumohaEngineOptions,
+  KumohaState,
+} from "@tanuden/kumoha";
 
 export interface KumohaData {
   connected: boolean;
+  state: KumohaState;
   gameData: GameDataState["gameData"];
   gameState: GameDataState["gameState"];
   pluginData: GameDataState["pluginData"];
 }
+
+export const kumohaDataDefaults: KumohaData = {
+  connected: false,
+  state: "disconnected",
+  gameData: {} as GameDataState["gameData"],
+  gameState: {} as GameDataState["gameState"],
+  pluginData: {} as GameDataState["pluginData"],
+};
 
 const useKumohaAPI = ({
   uri,
@@ -24,19 +38,16 @@ const useKumohaAPI = ({
     return kumoha;
   }, []);
 
-  const [data, setData] = useState<KumohaData>({
-    connected: false,
-    gameData: {} as GameDataState["gameData"],
-    gameState: {} as GameDataState["gameState"],
-    pluginData: {} as GameDataState["pluginData"],
-  });
+  const [data, setData] = useState<KumohaData>(kumohaDataDefaults);
 
   useEffect(() => {
     console.log("Kumoha API using " + uri);
 
     const gameDataListener = kumoha.getGameData((gameData) => {
       setData({
+        ...kumohaDataDefaults,
         connected: kumoha.isConnected(),
+        state: kumoha.state,
         ...gameData,
       });
     });
