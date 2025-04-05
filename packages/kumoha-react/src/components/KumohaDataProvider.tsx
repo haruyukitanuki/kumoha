@@ -1,5 +1,5 @@
 import React, { ReactNode, useMemo } from "react";
-import { KumohaData, useKumohaAPI } from "../hooks/use-kumoha-api";
+import { KumohaData, useInitKumoha } from "../hooks/use-init-kumoha";
 import { KumohaDataContext } from "../context";
 
 const KumohaDataProvider = ({
@@ -23,7 +23,7 @@ const KumohaDataProvider = ({
     return urlParams.get("room") || "";
   }, []);
 
-  const kumohaAPI = useKumohaAPI({
+  const kumohaAPI = useInitKumoha({
     uri: kumohaUri,
     humanReadableRoomId: humanReadableRoomId,
     options: {
@@ -33,17 +33,18 @@ const KumohaDataProvider = ({
     },
   });
 
-  const data = useMemo(() => {
+  const data: KumohaData = useMemo(() => {
     if (sampleData) {
       return sampleData;
     }
 
-    return kumohaAPI;
-  }, [sampleData, kumohaAPI.gameData]);
+    return kumohaAPI.data;
+  }, [sampleData, kumohaAPI.data]);
 
   return (
     <KumohaDataContext.Provider
       value={{
+        client: kumohaAPI.client,
         data,
       }}
     >

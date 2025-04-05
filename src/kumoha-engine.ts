@@ -6,7 +6,7 @@ import { PluginState } from "./types/console/plugin-meta.js";
 
 export type KumohaState =
   | "ok"
-  | "disconnected"
+  | "not-logged-in"
   | "auth-error"
   | "unknown-error";
 
@@ -31,7 +31,7 @@ class KumohaEngine {
   public socket: Socket;
   public metadata?: LoginResponse;
   public humanReadableRoomId?: string;
-  public state: KumohaState = "disconnected";
+  public state: KumohaState = "not-logged-in";
   public data: GameDataState | undefined = undefined;
   public dataListener: Socket | undefined = undefined;
 

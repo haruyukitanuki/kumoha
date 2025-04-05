@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import {
   GameDataState,
   Kumoha,
+  KumohaEngine,
   KumohaEngineOptions,
   KumohaState,
 } from "@tanuden/kumoha";
@@ -22,7 +23,7 @@ export const kumohaDataDefaults: KumohaData = {
   pluginData: {} as GameDataState["pluginData"],
 };
 
-const useKumohaAPI = ({
+export const useInitKumoha = ({
   uri,
   humanReadableRoomId,
   options,
@@ -30,7 +31,7 @@ const useKumohaAPI = ({
   uri: string;
   humanReadableRoomId: string;
   options?: KumohaEngineOptions;
-}): KumohaData => {
+}): { client: KumohaEngine; data: KumohaData } => {
   const kumoha = useMemo(() => {
     const kumoha = Kumoha(uri, humanReadableRoomId, {
       ...options,
@@ -57,7 +58,5 @@ const useKumohaAPI = ({
     };
   }, []);
 
-  return data;
+  return { client: kumoha, data: data };
 };
-
-export { useKumohaAPI };
