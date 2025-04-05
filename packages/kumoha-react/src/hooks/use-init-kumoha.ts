@@ -17,7 +17,7 @@ export interface KumohaData {
 
 export const kumohaDataDefaults: KumohaData = {
   connected: false,
-  state: "disconnected",
+  state: "not-logged-in",
   gameData: {} as GameDataState["gameData"],
   gameState: {} as GameDataState["gameState"],
   pluginData: {} as GameDataState["pluginData"],
