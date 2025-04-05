@@ -3,6 +3,10 @@ import { KumohaArisuData } from "./hooks/use-init-kumoha";
 import { KumohaEngine } from "@tanuden/kumoha";
 
 export const KumohaDataContext = createContext<{
-  client?: KumohaEngine;
+  client?: {
+    connected: boolean;
+    state: string;
+    engine: KumohaEngine;
+  };
   data?: KumohaArisuData;
 } | null>(null);
