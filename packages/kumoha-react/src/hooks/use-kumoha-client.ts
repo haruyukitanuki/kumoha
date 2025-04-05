@@ -1,8 +1,8 @@
 import { useContext } from "react";
-import { KumohaArisuDataContext } from "../context";
+import { KumohaDataContext } from "../context";
 import { KumohaEngine } from "@tanuden/kumoha";
 
 export const useKumohaClient = (): KumohaEngine | undefined => {
-  const kumohaContext = useContext(KumohaArisuDataContext);
+  const kumohaContext = useContext(KumohaDataContext);
   return kumohaContext?.client;
 };

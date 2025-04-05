@@ -1,8 +1,8 @@
 import React, { ReactNode, useMemo } from "react";
 import { KumohaArisuData, useInitKumoha } from "../hooks/use-init-kumoha";
-import { KumohaArisuDataContext } from "../context";
+import { KumohaDataContext } from "../context";
 
-const KumohaArisuDataProvider = ({
+export const KumohaDataProvider = ({
   kumohaUri,
   humanReadableRoomId: manualHumanReadableRoomId,
   sampleData,
@@ -42,15 +42,13 @@ const KumohaArisuDataProvider = ({
   }, [sampleData, kumohaAPI.data]);
 
   return (
-    <KumohaArisuDataContext.Provider
+    <KumohaDataContext.Provider
       value={{
         client: kumohaAPI.client,
         data,
       }}
     >
       {children}
-    </KumohaArisuDataContext.Provider>
+    </KumohaDataContext.Provider>
   );
 };
-
-export { KumohaArisuDataProvider };
