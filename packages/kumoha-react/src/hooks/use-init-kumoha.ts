@@ -4,20 +4,15 @@ import {
   Kumoha,
   KumohaEngine,
   KumohaEngineOptions,
-  KumohaState,
 } from "@tanuden/kumoha";
 
-export interface KumohaData {
-  connected: boolean;
-  state: KumohaState;
+export interface KumohaArisuData {
   gameData: GameDataState["gameData"];
   gameState: GameDataState["gameState"];
   pluginData: GameDataState["pluginData"];
 }
 
-export const kumohaDataDefaults: KumohaData = {
-  connected: false,
-  state: "not-logged-in",
+export const KumohaArisuDataDefaults: KumohaArisuData = {
   gameData: {} as GameDataState["gameData"],
   gameState: {} as GameDataState["gameState"],
   pluginData: {} as GameDataState["pluginData"],
@@ -31,7 +26,7 @@ export const useInitKumoha = ({
   uri: string;
   humanReadableRoomId: string;
   options?: KumohaEngineOptions;
-}): { client: KumohaEngine; data: KumohaData } => {
+}): { client: KumohaEngine; data: KumohaArisuData } => {
   const kumoha = useMemo(() => {
     const kumoha = Kumoha(uri, humanReadableRoomId, {
       ...options,
@@ -39,16 +34,14 @@ export const useInitKumoha = ({
     return kumoha;
   }, []);
 
-  const [data, setData] = useState<KumohaData>(kumohaDataDefaults);
+  const [data, setData] = useState<KumohaArisuData>(KumohaArisuDataDefaults);
 
   useEffect(() => {
     console.log("Kumoha API using " + uri);
 
     const gameDataListener = kumoha.getGameData((gameData) => {
       setData({
-        ...kumohaDataDefaults,
-        connected: kumoha.isConnected(),
-        state: kumoha.state,
+        ...KumohaArisuDataDefaults,
         ...gameData,
       });
     });

@@ -1,10 +1,11 @@
 {
   "name": "@tanuden/kumoha-react",
-  "version": "0.0.12",
+  "version": "0.0.13",
   "description": "React hooks for Tanuden Kumoha theming engine",
   "main": "lib/index.js",
   "scripts": {
-    "build": "tsc"
+    "build": "rimraf lib && tsc",
+    "prepublish": "npm run build"
   },
   "author": "Haruyuki Tanukiji <haruyuki@tanu.ch>",
   "license": "LGPL-2.1-only",

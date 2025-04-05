@@ -1,8 +1,8 @@
 import { useContext } from "react";
-import { KumohaDataContext } from "../context";
-import { KumohaData, kumohaDataDefaults } from "./use-init-kumoha";
+import { KumohaArisuDataContext } from "../context";
+import { KumohaArisuData, KumohaArisuDataDefaults } from "./use-init-kumoha";
 
-export const useKumohaData = (): KumohaData => {
-  const kumohaContext = useContext(KumohaDataContext);
-  return kumohaContext?.data || kumohaDataDefaults;
+export const useKumohaArisuData = (): KumohaArisuData => {
+  const kumohaContext = useContext(KumohaArisuDataContext);
+  return kumohaContext?.data || KumohaArisuDataDefaults;
 };

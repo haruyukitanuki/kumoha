@@ -1,8 +1,8 @@
 import { createContext } from "react";
-import { KumohaData } from "./hooks/use-init-kumoha";
+import { KumohaArisuData } from "./hooks/use-init-kumoha";
 import { KumohaEngine } from "@tanuden/kumoha";
 
-export const KumohaDataContext = createContext<{
+export const KumohaArisuDataContext = createContext<{
   client?: KumohaEngine;
-  data?: KumohaData;
+  data?: KumohaArisuData;
 } | null>(null);
