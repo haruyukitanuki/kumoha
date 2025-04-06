@@ -1,6 +1,6 @@
 {
   "name": "@tanuden/kumoha-react",
-  "version": "0.0.14",
+  "version": "0.0.16",
   "description": "React hooks for Tanuden Kumoha theming engine",
   "main": "lib/index.js",
   "scripts": {
