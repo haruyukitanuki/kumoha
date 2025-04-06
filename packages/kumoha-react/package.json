@@ -1,6 +1,6 @@
 {
   "name": "@tanuden/kumoha-react",
-  "version": "0.0.17",
+  "version": "0.0.18",
   "description": "React hooks for Tanuden Kumoha theming engine",
   "main": "lib/index.js",
   "scripts": {
@@ -10,7 +10,7 @@
   "author": "Haruyuki Tanukiji <haruyuki@tanu.ch>",
   "license": "LGPL-2.1-only",
   "dependencies": {
-    "@tanuden/kumoha": "file:../..",
+    "@tanuden/kumoha": "^0.0.13",
     "deep-object-diff": "^1.1.9",
     "react": "^19.0.0",
     "zustand": "^5.0.3"
