@@ -8,7 +8,8 @@ export type KumohaState =
   | "ok"
   | "not-logged-in"
   | "auth-error"
-  | "unknown-error";
+  | "unknown-error"
+  | "disconnected";
 
 type LoginResponse = {
   deviceId: string;
@@ -27,21 +28,42 @@ export type GameDataState = {
   pluginData: Record<string, PluginState>;
 };
 
-class KumohaEngine {
+export type KumohaClientMeta = {
+  connected: boolean;
+  state: KumohaState;
+  connection?: LoginResponse;
+};
+
+export class KumohaEngine {
   public socket: Socket;
-  public metadata?: LoginResponse;
   public humanReadableRoomId?: string;
-  public state: KumohaState = "not-logged-in";
-  public data: GameDataState | undefined = undefined;
-  public dataListener: Socket | undefined = undefined;
+  public listeners: Array<(kumohaMeta: KumohaClientMeta) => void> = [];
+  public state: KumohaState = "disconnected";
+  public connectionMetadata?: LoginResponse;
 
-  constructor(
-    uri: string,
-    humanReadableRoomId: string,
-    { socketOptions = {} }: KumohaEngineOptions
-  ) {
-    this.humanReadableRoomId = humanReadableRoomId;
+  private _pushClientMeta() {
+    const kumohaMeta: KumohaClientMeta = {
+      connected: this.socket.connected,
+      state: this.state,
+      connection: this.connectionMetadata,
+    };
 
+    this.listeners.forEach((listener) => {
+      listener(kumohaMeta);
+    });
+  }
+
+  private _setConnectionMeta(connectionMetadata: LoginResponse) {
+    this.connectionMetadata = connectionMetadata;
+    this._pushClientMeta();
+  }
+
+  private _setState(state: KumohaState) {
+    this.state = state;
+    this._pushClientMeta();
+  }
+
+  constructor(uri: string, { socketOptions = {} }: KumohaEngineOptions) {
     this.socket = io(uri, {
       autoConnect: true,
       extraHeaders: {
@@ -52,24 +74,17 @@ class KumohaEngine {
       this._catchAckErrors(data);
     });
 
-    this.login()
-      .then((response) => {
-        this.metadata = response;
-        this.state = "ok";
-      })
-      .catch((error) => {
-        if (error instanceof KumohaError) {
-          switch (error.name) {
-            case "KumohaError":
-              this.state = "auth-error";
-              break;
-            default:
-              this.state = "unknown-error";
-          }
-        } else {
-          this.state = "unknown-error";
-        }
-      });
+    this.socket.on("connect", () => {
+      this._setState("not-logged-in");
+    });
+
+    this.socket.on("disconnect", () => {
+      this._setState("disconnected");
+    });
+
+    this.socket.on("connect_error", () => {
+      this._setState("disconnected");
+    });
   }
 
   private _catchAckErrors(data: Record<string, string>) {
@@ -78,28 +93,53 @@ class KumohaEngine {
     }
   }
 
-  async login(): Promise<LoginResponse> {
+  async login(roomId?: string): Promise<LoginResponse> {
+    if (roomId) {
+      this.humanReadableRoomId = roomId;
+    }
+
     const response = await this.socket.emitWithAck("auth:login", {
       trafficRoomId: undefined,
       humanReadableRoomId: this.humanReadableRoomId,
     });
 
-    this._catchAckErrors(response);
+    try {
+      this._catchAckErrors(response);
+    } catch (error) {
+      if (!(error instanceof KumohaError) || error.name !== "KumohaError") {
+        this._setState("unknown-error");
+        throw error;
+      }
+
+      if (error.message === "AUTHENTICATION_ERROR") {
+        this._setState("auth-error");
+      }
+
+      throw error;
+    }
+
+    this._setState("ok");
+    this._setConnectionMeta(response);
 
     return response;
   }
 
-  isConnected() {
-    return this.socket.connected;
-  }
-
-  getGameData(callback: (data: GameDataState) => void) {
-    console.log("Listener active: getGameData");
-    // return this.socket.on("data:post", callback);
-
+  arisuListener(callback: (data: GameDataState) => void) {
     return {
       listener: this.socket.on("data:post", callback),
       off: () => this.socket.off("data:post", callback),
+    };
+  }
+
+  clientMetaListener(callback: (kumohaMeta: KumohaClientMeta) => void) {
+    this.listeners.push(callback);
+
+    return {
+      off: () => {
+        this.listeners = this.listeners.filter(
+          (listener) => listener !== callback
+        );
+      },
     };
   }
 
@@ -108,15 +148,12 @@ class KumohaEngine {
   }
 }
 
-const Kumoha = (
+export const Kumoha = (
   uri: string,
-  humanReadableRoomId: string,
   options?: KumohaEngineOptions
-) => {
-  const kumohaEngine = new KumohaEngine(uri, humanReadableRoomId, {
+): KumohaEngine => {
+  const kumohaEngine = new KumohaEngine(uri, {
     ...options,
   });
   return kumohaEngine;
 };
-
-export { Kumoha, KumohaEngine };
