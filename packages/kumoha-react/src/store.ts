@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { GameDataState, KumohaClientMeta, KumohaEngine } from "@tanuden/kumoha";
-import { KumohaArisuData } from "./hooks/use-kumoha";
+import { KumohaArisuData } from "./hooks/use-init-kumoha";
 
 export const KumohaArisuDataDefaults: KumohaArisuData = {
   gameData: {} as GameDataState["gameData"],

@@ -1,5 +1,5 @@
 import { createContext } from "react";
-import { KumohaArisuData } from "./hooks/use-kumoha";
+import { KumohaArisuData } from "./hooks/use-init-kumoha";
 import { KumohaClientMeta, KumohaEngine } from "@tanuden/kumoha";
 
 export const KumohaDataContext = createContext<{

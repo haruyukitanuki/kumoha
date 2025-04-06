@@ -128,13 +128,15 @@ export class KumohaEngine {
     return response;
   }
 
-  arisuListener(callback: (data: GameDataState) => void) {
+  arisuListener(callback: (data: GameDataState) => void): KumohaListener {
     return {
       off: () => this.socket.off("data:post", callback),
     };
   }
 
-  clientMetaListener(callback: (kumohaMeta: KumohaClientMeta) => void) {
+  clientMetaListener(
+    callback: (kumohaMeta: KumohaClientMeta) => void
+  ): KumohaListener {
     this.listeners.push(callback);
 
     return {
