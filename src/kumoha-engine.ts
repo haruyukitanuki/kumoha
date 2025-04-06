@@ -34,6 +34,10 @@ export type KumohaClientMeta = {
   connection?: LoginResponse;
 };
 
+export type KumohaListener = {
+  off: () => Socket | void;
+};
+
 export class KumohaEngine {
   public socket: Socket;
   public humanReadableRoomId?: string;
@@ -126,7 +130,6 @@ export class KumohaEngine {
 
   arisuListener(callback: (data: GameDataState) => void) {
     return {
-      listener: this.socket.on("data:post", callback),
       off: () => this.socket.off("data:post", callback),
     };
   }

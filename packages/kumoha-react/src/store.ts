@@ -15,8 +15,8 @@ export const KumohaClientDefaults: KumohaClientMeta = {
 };
 
 type KumohaStore = {
-  engine?: KumohaEngine;
-  _setEngine: (engine: KumohaEngine) => void;
+  engine: KumohaEngine | undefined;
+  _setEngine: (engine: KumohaEngine | undefined) => void;
   clientMetadata: KumohaClientMeta;
   setClientMetadata: (clientMetadata: KumohaClientMeta) => void;
   data: KumohaArisuData;

@@ -1,9 +1,10 @@
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
   GameDataState,
   Kumoha,
   KumohaClientMeta,
   KumohaEngineOptions,
+  KumohaListener,
 } from "@tanuden/kumoha";
 import { updatedDiff } from "deep-object-diff";
 import { useKumohaInternalStore } from "../store";
@@ -15,6 +16,7 @@ export interface KumohaArisuData {
 }
 
 export const useKumoha = (uri: string, options?: KumohaEngineOptions) => {
+  const [existingInitialized, setExistingInitialized] = useState(true);
   const { engine, _setEngine, clientMetadata, setClientMetadata, setData } =
     useKumohaInternalStore();
 
@@ -24,38 +26,45 @@ export const useKumoha = (uri: string, options?: KumohaEngineOptions) => {
     if (!kumohaEngine) {
       kumohaEngine = Kumoha(uri, options);
       _setEngine(kumohaEngine);
+      setExistingInitialized(false);
     }
     return kumohaEngine;
   }, []);
 
   useEffect(() => {
-    console.log("Kumoha API using " + uri);
+    let gameDataListener: KumohaListener;
+    let clientMetaListener: KumohaListener;
 
-    const gameDataListener = kumoha.arisuListener((gameData) => {
-      setData(gameData);
-    });
+    if (existingInitialized) {
+      console.info("Kumoha API using " + uri);
 
-    const clientMetaListener = kumoha.clientMetaListener(
-      (incomingClientMetadata) => {
-        const diff = updatedDiff(
-          clientMetadata || {},
-          incomingClientMetadata
-        ) as KumohaClientMeta;
+      gameDataListener = kumoha.arisuListener((gameData) => {
+        setData(gameData);
+      });
 
-        if (Object.keys(diff).length > 0) {
-          setClientMetadata({
-            ...clientMetadata,
-            ...diff,
-          });
+      clientMetaListener = kumoha.clientMetaListener(
+        (incomingClientMetadata) => {
+          const diff = updatedDiff(
+            clientMetadata || {},
+            incomingClientMetadata
+          ) as KumohaClientMeta;
+
+          if (Object.keys(diff).length > 0) {
+            setClientMetadata({
+              ...clientMetadata,
+              ...diff,
+            });
+          }
         }
-      }
-    );
+      );
+    }
 
     return () => {
-      gameDataListener.off();
-      clientMetaListener.off();
+      gameDataListener?.off();
+      clientMetaListener?.off();
+      _setEngine(undefined);
     };
-  }, []);
+  }, [existingInitialized]);
 
   return kumoha;
 };
