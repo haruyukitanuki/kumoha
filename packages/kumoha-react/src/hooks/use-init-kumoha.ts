@@ -14,9 +14,13 @@ export interface KumohaArisuData {
   pluginData: GameDataState["pluginData"];
 }
 
+export type InitializeKumohaOptions = KumohaEngineOptions & {
+  sampleData?: KumohaArisuData;
+};
+
 export const useInitializeKumoha = (
   uri: string,
-  options?: KumohaEngineOptions
+  options?: InitializeKumohaOptions
 ) => {
   const { engine, _setEngine, clientMetadata, setClientMetadata, setData } =
     useKumohaInternalStore();
@@ -38,8 +42,12 @@ export const useInitializeKumoha = (
   useEffect(() => {
     console.info("Kumoha API using " + uri);
 
+    if (options?.sampleData) {
+      setData(options.sampleData);
+    }
+
     const gameDataListener = kumoha.arisuListener((gameData) => {
-      setData(gameData);
+      setData(options?.sampleData || gameData);
     });
 
     const clientMetaListener = kumoha.clientMetaListener(
@@ -63,7 +71,7 @@ export const useInitializeKumoha = (
       clientMetaListener?.off();
       kumoha.dispose();
     };
-  }, []);
+  }, [options?.sampleData]);
 
   return kumoha;
 };
