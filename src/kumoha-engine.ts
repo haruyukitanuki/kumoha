@@ -57,7 +57,7 @@ export class KumohaEngine {
     });
   }
 
-  private _setConnectionMeta(connectionMetadata: LoginResponse) {
+  private _setConnectionMeta(connectionMetadata?: LoginResponse) {
     this.connectionMetadata = connectionMetadata;
     this._pushClientMeta();
   }
@@ -79,6 +79,7 @@ export class KumohaEngine {
     });
 
     this.socket.on("connect", () => {
+      console.log("Connected to KumohaEngine.");
       this._setState("not-logged-in");
     });
 
@@ -150,7 +151,11 @@ export class KumohaEngine {
   }
 
   dispose() {
-    this.socket.disconnect();
+    this._setConnectionMeta(undefined);
+    this._setState("disconnected");
+    this._pushClientMeta();
+    this.listeners = [];
+    this.socket.close();
   }
 }
 

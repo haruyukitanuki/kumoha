@@ -1,9 +1,10 @@
 {
   "name": "@tanuden/kumoha",
-  "version": "0.0.14",
+  "version": "0.0.15",
   "main": "lib/index.js",
   "scripts": {
     "build": "rimraf lib && tsc",
+    "watch": "tsc --watch",
     "prepublish": "npm run build"
   },
   "keywords": [
