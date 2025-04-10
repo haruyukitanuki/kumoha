@@ -129,6 +129,7 @@ export class KumohaEngine {
   }
 
   arisuListener(callback: (data: GameDataState) => void): KumohaListener {
+    this.socket.on("data:post", callback);
     return {
       off: () => this.socket.off("data:post", callback),
     };
