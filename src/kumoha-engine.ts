@@ -94,7 +94,7 @@ export class KumohaEngine {
 
   private _catchAckErrors(data: Record<string, string>) {
     if (data._error) {
-      throw new KumohaError(data.because!);
+      throw new KumohaError(data.because!, data?.message);
     }
   }
 
@@ -111,12 +111,12 @@ export class KumohaEngine {
     try {
       this._catchAckErrors(response);
     } catch (error) {
-      if (!(error instanceof KumohaError) || error.name !== "KumohaError") {
+      if (!(error instanceof KumohaError)) {
         this._setState("unknown-error");
         throw error;
       }
 
-      if (error.message === "AUTHENTICATION_ERROR") {
+      if (error.name === "AUTHENTICATION_ERROR") {
         this._setState("auth-error");
       }
 

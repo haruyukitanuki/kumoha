@@ -1,6 +1,7 @@
 export class KumohaError extends Error {
-  constructor(message: string) {
+  constructor(name: string, message?: string) {
     super(message);
-    this.name = "KumohaError";
+    this.name = name;
+    this.message = `(KumohaError) ${message}`;
   }
 }
