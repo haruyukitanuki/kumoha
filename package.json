@@ -1,6 +1,6 @@
 {
   "name": "@tanuden/kumoha",
-  "version": "0.0.15",
+  "version": "0.0.16",
   "main": "lib/index.js",
   "scripts": {
     "build": "rimraf lib && tsc",
