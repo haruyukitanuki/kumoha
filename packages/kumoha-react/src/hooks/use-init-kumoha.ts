@@ -24,15 +24,11 @@ export const useInitializeKumoha = (
   options?: InitializeKumohaOptions
 ) => {
   // const [alreadyInit, setAlreadyInit] = useState(true); // Intentional default to true. Don't attempt to trigger anything until we confirm that there is an engine.
-  const {
-    _setEngine,
-    _disposeEngine,
-    clientMetadata,
-    setClientMetadata,
-    setData,
-  } = useKumohaInternalStore();
+  const { engine, _setEngine, clientMetadata, setClientMetadata, setData } =
+    useKumohaInternalStore();
 
   const kumoha = useMemo(() => {
+    if (engine) return engine;
     // Enforce single instance of KumohaEngine
     const kumohaEngine = Kumoha(uri, {
       socketOptions: {
@@ -80,7 +76,6 @@ export const useInitializeKumoha = (
     return () => {
       gameDataListener?.off();
       clientMetaListener?.off();
-      _disposeEngine();
     };
   }, [options, kumoha]);
 

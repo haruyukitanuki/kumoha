@@ -22,7 +22,6 @@ type KumohaStore = {
 
 type KumohaStoreFunctions = {
   _setEngine: (engine: KumohaEngine | undefined) => void;
-  _disposeEngine: () => void;
   setClientMetadata: (clientMetadata: KumohaClientMeta) => void;
   setData: (data: KumohaArisuData) => void;
 };
@@ -31,15 +30,7 @@ export const useKumohaInternalStore = create<
   KumohaStore & KumohaStoreFunctions
 >((set) => ({
   engine: undefined,
-  _setEngine: (engine) => {
-    set({ engine });
-  },
-  _disposeEngine: () => {
-    set((state) => {
-      state.engine?.dispose();
-      return { engine: undefined };
-    });
-  },
+  _setEngine: (engine) => set({ engine }),
   clientMetadata: KumohaClientDefaults,
   setClientMetadata: (clientMetadata) => set({ clientMetadata }),
   data: KumohaArisuDataDefaults as KumohaArisuData,

@@ -98,6 +98,19 @@ export class KumohaEngine {
     }
   }
 
+  private _handleAckErrors(error: unknown) {
+    if (!(error instanceof KumohaError)) {
+      this._setState("unknown-error");
+      throw error;
+    }
+
+    if (error.name === "AUTHENTICATION_ERROR") {
+      this._setState("auth-error");
+    }
+
+    throw error;
+  }
+
   async login(roomId?: string): Promise<LoginResponse> {
     if (roomId) {
       this.humanReadableRoomId = roomId;
@@ -111,20 +124,26 @@ export class KumohaEngine {
     try {
       this._catchAckErrors(response);
     } catch (error) {
-      if (!(error instanceof KumohaError)) {
-        this._setState("unknown-error");
-        throw error;
-      }
-
-      if (error.name === "AUTHENTICATION_ERROR") {
-        this._setState("auth-error");
-      }
-
-      throw error;
+      this._handleAckErrors(error);
     }
 
     this._setState("ok");
     this._setConnectionMeta(response);
+
+    return response;
+  }
+
+  async sendButtonAction(action: string, active: boolean | "pulse") {
+    const response = await this.socket.emitWithAck("data:post-button", {
+      action,
+      active,
+    });
+
+    try {
+      this._catchAckErrors(response);
+    } catch (error) {
+      this._handleAckErrors(error);
+    }
 
     return response;
   }
