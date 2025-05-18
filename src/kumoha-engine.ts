@@ -1,15 +1,20 @@
-import { io, ManagerOptions, Socket, SocketOptions } from "socket.io-client";
-import { KumohaError } from "./errors.js";
-import { OpenTetsuData } from "opentetsu";
-import { GameState } from "./types/opentetsu-additions/game-state.js";
-import { PluginState } from "./types/console/plugin-meta.js";
+import {
+  io,
+  type ManagerOptions,
+  Socket,
+  type SocketOptions
+} from 'socket.io-client';
+import { KumohaError } from './errors.js';
+import { type OpenTetsuData } from 'opentetsu';
+import { type GameState } from './types/opentetsu-additions/game-state.js';
+import { type PluginState } from './types/console/plugin-meta.js';
 
 export type KumohaState =
-  | "ok"
-  | "not-logged-in"
-  | "auth-error"
-  | "unknown-error"
-  | "disconnected";
+  | 'ok'
+  | 'not-logged-in'
+  | 'auth-error'
+  | 'unknown-error'
+  | 'disconnected';
 
 type LoginResponse = {
   deviceId: string;
@@ -42,14 +47,14 @@ export class KumohaEngine {
   public socket: Socket;
   public humanReadableRoomId?: string;
   public listeners: Array<(kumohaMeta: KumohaClientMeta) => void> = [];
-  public state: KumohaState = "disconnected";
+  public state: KumohaState = 'disconnected';
   public connectionMetadata?: LoginResponse;
 
   private _pushClientMeta() {
     const kumohaMeta: KumohaClientMeta = {
       connected: this.socket.connected,
       state: this.state,
-      connection: this.connectionMetadata,
+      connection: this.connectionMetadata
     };
 
     this.listeners.forEach((listener) => {
@@ -71,24 +76,24 @@ export class KumohaEngine {
     this.socket = io(uri, {
       autoConnect: true,
       extraHeaders: {
-        "X-Device-Type": "display",
+        'X-Device-Type': 'display'
       },
-      ...socketOptions,
+      ...socketOptions
     }).prependAny((_event, data) => {
       this._catchAckErrors(data);
     });
 
-    this.socket.on("connect", () => {
-      console.log("Connected to KumohaEngine.");
-      this._setState("not-logged-in");
+    this.socket.on('connect', () => {
+      console.log('Connected to KumohaEngine.');
+      this._setState('not-logged-in');
     });
 
-    this.socket.on("disconnect", () => {
-      this._setState("disconnected");
+    this.socket.on('disconnect', () => {
+      this._setState('disconnected');
     });
 
-    this.socket.on("connect_error", () => {
-      this._setState("disconnected");
+    this.socket.on('connect_error', () => {
+      this._setState('disconnected');
     });
   }
 
@@ -100,12 +105,12 @@ export class KumohaEngine {
 
   private _handleAckErrors(error: unknown) {
     if (!(error instanceof KumohaError)) {
-      this._setState("unknown-error");
+      this._setState('unknown-error');
       throw error;
     }
 
-    if (error.name === "AUTHENTICATION_ERROR") {
-      this._setState("auth-error");
+    if (error.name === 'AUTHENTICATION_ERROR') {
+      this._setState('auth-error');
     }
 
     throw error;
@@ -116,9 +121,9 @@ export class KumohaEngine {
       this.humanReadableRoomId = roomId;
     }
 
-    const response = await this.socket.emitWithAck("auth:login", {
+    const response = await this.socket.emitWithAck('auth:login', {
       trafficRoomId: undefined,
-      humanReadableRoomId: this.humanReadableRoomId,
+      humanReadableRoomId: this.humanReadableRoomId
     });
 
     try {
@@ -127,16 +132,16 @@ export class KumohaEngine {
       this._handleAckErrors(error);
     }
 
-    this._setState("ok");
+    this._setState('ok');
     this._setConnectionMeta(response);
 
     return response;
   }
 
-  async sendButtonAction(action: string, active: boolean | "pulse") {
-    const response = await this.socket.emitWithAck("data:post-button", {
+  async sendButtonAction(action: string, active: boolean | 'pulse') {
+    const response = await this.socket.emitWithAck('data:post-button', {
       action,
-      active,
+      active
     });
 
     try {
@@ -149,9 +154,9 @@ export class KumohaEngine {
   }
 
   arisuListener(callback: (data: GameDataState) => void): KumohaListener {
-    this.socket.on("data:post", callback);
+    this.socket.on('data:post', callback);
     return {
-      off: () => this.socket.off("data:post", callback),
+      off: () => this.socket.off('data:post', callback)
     };
   }
 
@@ -165,13 +170,13 @@ export class KumohaEngine {
         this.listeners = this.listeners.filter(
           (listener) => listener !== callback
         );
-      },
+      }
     };
   }
 
   dispose() {
     this._setConnectionMeta(undefined);
-    this._setState("disconnected");
+    this._setState('disconnected');
     this._pushClientMeta();
     this.listeners = [];
     this.socket.close();
@@ -183,7 +188,7 @@ export const Kumoha = (
   options?: KumohaEngineOptions
 ): KumohaEngine => {
   const kumohaEngine = new KumohaEngine(uri, {
-    ...options,
+    ...options
   });
   return kumohaEngine;
 };

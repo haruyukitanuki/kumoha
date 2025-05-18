@@ -1,4 +1,4 @@
-import { OpenTetsuData } from "opentetsu";
+import { type OpenTetsuData } from 'opentetsu';
 
 export interface PluginMeta {
   uid: string;
