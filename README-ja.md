@@ -1,7 +1,8 @@
 <center>
 <!-- <h1>クモハ</h1> -->
-![Tanuden Kumoha Logo](./TanudenKumoha-LogoWhite.svg#gh-dark-mode-only)
-![Tanuden Kumoha Logo](./TanudenKumoha-LogoBlack.svg#gh-light-mode-only)
+![Tanuden Kumoha Logo](/TanudenKumoha-LogoWhite.svg#gh-dark-mode-only)
+
+![Tanuden Kumoha Logo](/TanudenKumoha-LogoBlack.svg#gh-light-mode-only)
 
 狸河電鉄コンソール「Kumoha テーミング & モッディングエンジン」と連携するための公式ライブラリです。
 </center>

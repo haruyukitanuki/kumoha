@@ -1,7 +1,8 @@
 <center>
 <!-- <h1>Kumoha</h1> -->
-![Tanuden Kumoha Logo](./TanudenKumoha-LogoWhite.svg#gh-dark-mode-only)
-![Tanuden Kumoha Logo](./TanudenKumoha-LogoBlack.svg#gh-light-mode-only)
+![Tanuden Kumoha Logo](/TanudenKumoha-LogoWhite.svg#gh-dark-mode-only)
+
+![Tanuden Kumoha Logo](/TanudenKumoha-LogoBlack.svg#gh-light-mode-only)
 
 The official library for interfacing with the Tanuden Console's Kumoha Theming and Modding Engine
 </center>
