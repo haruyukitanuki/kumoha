@@ -1,13 +1,23 @@
-<center>
+
+<p align="center">
 <picture>
-  <source media="(prefers-color-scheme: dark), (max-height: 50px)" srcset="TanudenKumoha-LogoWhite.svg">
-  <source media="(prefers-color-scheme: light), (max-height: 50px)" srcset="TanudenKumoha-LogoBlack.svg">
-  <img src="TanudenKumoha-LogoBlack.svg" alt="Tanuden Kumoha Logo" style="width: 50%;">
+  <source media="(prefers-color-scheme: dark), (max-height: 50px)" srcset="https://raw.githubusercontent.com/haruyukitanuki/kumoha/refs/heads/main/TanudenKumoha-LogoWhite.svg">
+  <source media="(prefers-color-scheme: light), (max-height: 50px)" srcset="https://raw.githubusercontent.com/haruyukitanuki/kumoha/refs/heads/main/TanudenKumoha-LogoBlack.svg">
+  <img src="https://raw.githubusercontent.com/haruyukitanuki/kumoha/refs/heads/main/TanudenKumoha-LogoBlack.svg" alt="Tanuden Kumoha Logo" width="40%">
 </picture>
+</p>
 <br>
-<br>
-狸河電鉄コンソールのクモハテーマ・モッディングエンジンと連携するための公式ライブラリです。
-</center>
+<p align="center">狸河電鉄コンソールのクモハテーマ・モッディングエンジンと連携するための公式ライブラリです。</p>
+
+[![GitHub release](https://img.shields.io/github/release/haruyukitanuki/kumoha?include_prereleases=&sort=semver&color=388270)](https://github.com/haruyukitanuki/kumoha/releases/)
+[![License](https://img.shields.io/badge/License-LGPL--2.1-388270)](#license)
+
+> [!TIP]
+> This documentation is available in English & Japanese<br>
+> このドキュメントは英語版と日本語版があります。
+> 
+> [![docs - en](https://img.shields.io/static/v1?label=docs&message=en&color=397eed)](https://github.com/haruyukitanuki/kumoha/blob/main/README.md) 
+> [![ドキュメント - ja](https://img.shields.io/static/v1?label=ドキュメント&message=ja&color=e32b47)](https://github.com/haruyukitanuki/kumoha/blob/main/README-ja.md)
 
 #### 🚄 名前の由来
 

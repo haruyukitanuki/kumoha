@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "main": "lib/index.js",
   "type": "module",
+  "description": "Theming Engine API for Tanuden TIMS",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
