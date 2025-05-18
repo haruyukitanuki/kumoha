@@ -1,54 +1,81 @@
-# React + TypeScript + Vite
+<center>
+<!-- <h1>Kumoha</h1> -->
+![Tanuden Kumoha Logo](./TanudenKumoha-LogoWhite.svg#gh-dark-mode-only)
+![Tanuden Kumoha Logo](./TanudenKumoha-LogoBlack.svg#gh-light-mode-only)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+The official library for interfacing with the Tanuden Console's Kumoha Theming and Modding Engine
+</center>
 
-Currently, two official plugins are available:
+#### 🚄 About the Name
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+**Kumoha** is a Japanese railway classification prefix used to designate an electric multiple unit (EMU) car that is both motorized and equipped with a driving cab. The name is composed of:
 
-## Expanding the ESLint configuration
+- **Ku (ク)**: indicating a control (driving) cab is present,  
+- **Mo (モ)**: indicating that the car has traction motors,  
+- **Ha (ハ)**: indicating a passenger car.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+---
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+## 📦 Installation
+
+This package is published as `@tanuden/kumoha`.
+
+```bash
+npm install @tanuden/kumoha
 ```
+* Works on both frontend and backend environments
+* For React users, it's recommended to use [`@tanuden/kumoha-react`](https://www.npmjs.com/package/@tanuden/kumoha-react) and consume the hooks it provides
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## 📚 Basic Usage
+```ts
+import { Kumoha } from '@tanuden/kumoha';
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+const engine = Kumoha("ws://localhost:58680", {
+  socketOptions: {
+    // socket.io options (not recommended to modify unless necessary)
+  }
+});
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
+// Example login with room ID "ABC123"
+await engine.login('ABC123');
+
+// Example button action sending "DoorOpn" (door open)
+await engine.sendButtonAction('DoorOpn', true);
 ```
+* The port number in the URI (58680) is fixed by the Tanuden Console and should not be changed.
+* Modifying socketOptions is generally not recommended unless you have specific advanced use cases.
+
+## 🎛️ Supported Button Actions
+The `sendButtonAction` method accepts action strings matching the Train Crew Controller API. Below is a list of common actions and their descriptions.
+
+| Action     | Description                |
+| ---------- | -------------------------- |
+| NotchUp    | Increase throttle step     |
+| NotchDw    | Decrease throttle step     |
+| NotchN     | Set throttle to Neutral    |
+| NotchEB    | EB notch (emergency brake) |
+| Buzzer     | Buzzer                     |
+| HornAir    | Air horn                   |
+| HornEle    | Electric horn              |
+| ViewChange | Change viewpoint           |
+| PauseMenu  | Pause menu                 |
+| DoorOpn    | Open door                  |
+| DoorCls    | Close door                 |
+| Housou     | Announce (PA system)       |
+
+For the full list and detailed descriptions, please refer to Train Crew Controller API documentation.
+
+## 💾 Tanuden OSS
+This project is licensed under the GNU Lesser General Public License v2.1 (LGPL-2.1).
+For more details, please see the LICENSE file.
+
+> [!IMPORTANT] 
+> This repository may contain trademarks or logos owned by Tanukigawa Railway. Unauthorized use is prohibited.
+
+## 💝 Support
+If you have some spare change you'll like to contribute to my ramen fund (helps keep me filled while working on projects), visit my [Fanbox](https://haruyukitanuki.fanbox.cc). 
+
+[Tanuden Discord Server](https://go.tanu.ch/tanuden-discord) | [Twitter](https://go.tanu.ch/twitter) | [YouTube](https://go.tanu.ch/tanutube)
+
+**Tanukigawa Electric Railway | Copyright &copy; 2025 Haruyuki Tanukiji.**
+
