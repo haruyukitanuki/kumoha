@@ -1,8 +1,10 @@
 <center>
-<!-- <h1>クモハ</h1> -->
-![Tanuden Kumoha Logo](/TanudenKumoha-LogoWhite.svg#gh-dark-mode-only)
+<picture>
+  <source media="(prefers-color-scheme: dark), (max-height: 50px)" srcset="TanudenKumoha-LogoWhite.svg">
+  <source media="(prefers-color-scheme: light), (max-height: 50px)" srcset="TanudenKumoha-LogoBlack.svg">
+  <img src="TanudenKumoha-LogoBlack.svg" alt="Tanuden Kumoha Logo" style="max-height: 100px; width: 100%; margin-bottom: 20px;">
+</picture>
 
-![Tanuden Kumoha Logo](/TanudenKumoha-LogoBlack.svg#gh-light-mode-only)
 
 狸河電鉄コンソール「Kumoha テーミング & モッディングエンジン」と連携するための公式ライブラリです。
 </center>
@@ -35,7 +37,7 @@ const engine = Kumoha("ws://localhost:58680", {
   }
 });
 
-// 例: ルームID「ABC123」でログイン
+// 例: ルームID「ABC123」でログイン -- タヌ電コンソールでルームIDを確認してください
 await engine.login('ABC123');
 
 // 例: ドア開操作 "DoorOpn" を送信

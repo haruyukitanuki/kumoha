@@ -1,8 +1,9 @@
 <center>
-<!-- <h1>Kumoha</h1> -->
-![Tanuden Kumoha Logo](/TanudenKumoha-LogoWhite.svg#gh-dark-mode-only)
-
-![Tanuden Kumoha Logo](/TanudenKumoha-LogoBlack.svg#gh-light-mode-only)
+<picture>
+  <source media="(prefers-color-scheme: dark), (max-height: 50px)" srcset="TanudenKumoha-LogoWhite.svg">
+  <source media="(prefers-color-scheme: light), (max-height: 50px)" srcset="TanudenKumoha-LogoBlack.svg">
+  <img src="TanudenKumoha-LogoBlack.svg" alt="Tanuden Kumoha Logo" style="max-height: 100px; width: 100%; margin-bottom: 20px;">
+</picture>
 
 The official library for interfacing with the Tanuden Console's Kumoha Theming and Modding Engine
 </center>
@@ -37,7 +38,7 @@ const engine = Kumoha("ws://localhost:58680", {
   }
 });
 
-// Example login with room ID "ABC123"
+// Example login with room ID "ABC123" -- Refer to the Tanuden Console for the room ID
 await engine.login('ABC123');
 
 // Example button action sending "DoorOpn" (door open)
