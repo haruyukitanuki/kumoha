@@ -2,11 +2,11 @@
 <picture>
   <source media="(prefers-color-scheme: dark), (max-height: 50px)" srcset="TanudenKumoha-LogoWhite.svg">
   <source media="(prefers-color-scheme: light), (max-height: 50px)" srcset="TanudenKumoha-LogoBlack.svg">
-  <img src="TanudenKumoha-LogoBlack.svg" alt="Tanuden Kumoha Logo" style="max-height: 100px; width: 100%; margin-bottom: 20px;">
+  <img src="TanudenKumoha-LogoBlack.svg" alt="Tanuden Kumoha Logo" style="width: 50%;">
 </picture>
-
-
-狸河電鉄コンソール「Kumoha テーミング & モッディングエンジン」と連携するための公式ライブラリです。
+<br>
+<br>
+狸河電鉄コンソールのクモハテーマ・モッディングエンジンと連携するための公式ライブラリです。
 </center>
 
 #### 🚄 名前の由来
