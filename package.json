@@ -1,6 +1,6 @@
 {
   "name": "@tanuden/kumoha",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "main": "lib/index.js",
   "type": "module",
   "description": "Theming Engine API for Tanuden TIMS",
@@ -11,7 +11,8 @@
     "lint:check": "eslint .",
     "format": "prettier --config .prettierrc.cjs --write './**/*.{ts,tsx,js,jsx,cjs,json,yml,yaml}'",
     "format:check": "prettier --config .prettierrc.cjs --check './**/*.{ts,tsx,js,jsx,cjs,json,yml,yaml}'",
-    "prepare": "husky"
+    "prepare": "husky",
+    "postinstall": "npm run build"
   },
   "dependencies": {
     "socket.io-client": "^4.8.1"
