@@ -11,8 +11,7 @@
     "lint:check": "eslint .",
     "format": "prettier --config .prettierrc.cjs --write './**/*.{ts,tsx,js,jsx,cjs,json,yml,yaml}'",
     "format:check": "prettier --config .prettierrc.cjs --check './**/*.{ts,tsx,js,jsx,cjs,json,yml,yaml}'",
-    "prepare": "husky",
-    "postinstall": "npm run build"
+    "prepare": "husky"
   },
   "dependencies": {
     "socket.io-client": "^4.8.1"
