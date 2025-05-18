@@ -1,6 +1,6 @@
 {
   "name": "@tanuden/kumoha",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "main": "lib/index.js",
   "type": "module",
   "description": "Theming Engine API for Tanuden TIMS",
