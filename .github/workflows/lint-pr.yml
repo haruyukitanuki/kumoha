@@ -1,4 +1,6 @@
 name: Lint PR Code
+permissions:
+  contents: read
 
 on:
   pull_request:
