@@ -47,9 +47,13 @@ export type KumohaThemeUserPrefs = Record<string, string | number | boolean>;
 
 export class KumohaEngine {
   public socket: Socket;
+  /** @internal */
   public humanReadableRoomId?: string;
+  /** @internal */
   public listeners: Array<(kumohaMeta: KumohaClientMeta) => void> = []; // This does not contain listeners for socket
+  /** @internal */
   public state: KumohaState = 'disconnected';
+  /** @internal */
   public connectionMetadata?: LoginResponse;
 
   private _pushClientMeta() {
