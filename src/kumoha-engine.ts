@@ -43,6 +43,8 @@ export type KumohaListener = {
   off: () => Socket | void;
 };
 
+export type KumohaThemeUserPrefs = Record<string, string | number | boolean>;
+
 export class KumohaEngine {
   public socket: Socket;
   /** @internal */
@@ -175,6 +177,15 @@ export class KumohaEngine {
           (listener) => listener !== callback
         );
       }
+    };
+  }
+
+  userPrefsListener(
+    callback: (userPrefs: KumohaThemeUserPrefs) => void
+  ): KumohaListener {
+    this.socket.on('data:user-prefs', callback);
+    return {
+      off: () => this.socket.off('data:user-prefs', callback)
     };
   }
 

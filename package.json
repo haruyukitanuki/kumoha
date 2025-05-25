@@ -1,6 +1,6 @@
 {
   "name": "@tanuden/kumoha",
-  "version": "0.1.5",
+  "version": "0.2.0",
   "main": "dist/index.js",
   "type": "module",
   "description": "Theming Engine API for Tanuden TIMS",
@@ -17,7 +17,7 @@
     "socket.io-client": "^4.8.1"
   },
   "devDependencies": {
-    "opentetsu": "^0.0.7",
+    "opentetsu": "^0.0.8",
     "@eslint/js": "^9.25.0",
     "@types/node": "^22.15.17",
     "eslint": "^9.25.0",
