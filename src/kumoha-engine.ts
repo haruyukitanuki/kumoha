@@ -43,10 +43,12 @@ export type KumohaListener = {
   off: () => Socket | void;
 };
 
+export type KumohaThemeUserPrefs = Record<string, string | number | boolean>;
+
 export class KumohaEngine {
   public socket: Socket;
   public humanReadableRoomId?: string;
-  public listeners: Array<(kumohaMeta: KumohaClientMeta) => void> = [];
+  public listeners: Array<(kumohaMeta: KumohaClientMeta) => void> = []; // This does not contain listeners for socket
   public state: KumohaState = 'disconnected';
   public connectionMetadata?: LoginResponse;
 
@@ -171,6 +173,15 @@ export class KumohaEngine {
           (listener) => listener !== callback
         );
       }
+    };
+  }
+
+  userPrefsListener(
+    callback: (userPrefs: KumohaThemeUserPrefs) => void
+  ): KumohaListener {
+    this.socket.on('data:user-prefs', callback);
+    return {
+      off: () => this.socket.off('data:user-prefs', callback)
     };
   }
 
