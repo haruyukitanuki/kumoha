@@ -111,7 +111,7 @@ export class KumohaEngine {
   }
 
   private _catchAckErrors(data: Record<string, string>) {
-    if (data._error) {
+    if (data?._error) {
       throw new KumohaError(data.because!, data?.message);
     }
   }
