@@ -191,6 +191,13 @@ export class KumohaEngine {
     const userPrefs = await this.socket.emitWithAck('data:user-prefs', {
       themeName: this.themeName
     });
+
+    try {
+      this._catchAckErrors(userPrefs as Record<string, string>);
+    } catch (error) {
+      this._handleAckErrors(error);
+    }
+
     return userPrefs as KumohaThemeUserPrefs;
   }
 
@@ -200,6 +207,13 @@ export class KumohaEngine {
     this.socket.on('data:update-user-prefs', (data) => {
       const userPrefsThemeName = data[0]?.themeName as string | undefined;
       const userPrefs = data[1] as KumohaThemeUserPrefs;
+
+      try {
+        this._catchAckErrors(userPrefs as Record<string, string>);
+      } catch (error) {
+        this._handleAckErrors(error);
+      }
+
       if (userPrefsThemeName === this.themeName) {
         callback(userPrefs);
       }
