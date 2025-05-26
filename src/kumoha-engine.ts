@@ -188,7 +188,7 @@ export class KumohaEngine {
   }
 
   async getUserPrefs(): Promise<KumohaThemeUserPrefs> {
-    const userPrefs = await this.socket.emitWithAck('data:get-user-prefs', {
+    const userPrefs = await this.socket.emitWithAck('data:user-prefs', {
       themeName: this.themeName
     });
     return userPrefs as KumohaThemeUserPrefs;
@@ -197,7 +197,7 @@ export class KumohaEngine {
   userPrefsListener(
     callback: (userPrefs: KumohaThemeUserPrefs) => void
   ): KumohaListener {
-    this.socket.on('data:user-prefs', (data) => {
+    this.socket.on('data:update-user-prefs', (data) => {
       const userPrefsThemeName = data[0]?.themeName as string | undefined;
       const userPrefs = data[1] as KumohaThemeUserPrefs;
       if (userPrefsThemeName === this.themeName) {
@@ -205,7 +205,7 @@ export class KumohaEngine {
       }
     });
     return {
-      off: () => this.socket.off('data:user-prefs', callback)
+      off: () => this.socket.off('data:update-user-prefs', callback)
     };
   }
 
