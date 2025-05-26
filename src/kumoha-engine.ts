@@ -44,7 +44,8 @@ export type KumohaListener = {
   off: () => Socket | void;
 };
 
-export type KumohaThemeUserPrefs = Record<string, string | number | boolean>;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export type KumohaThemeUserPrefs = Record<string, any>;
 
 export class KumohaEngine {
   public socket: Socket;
