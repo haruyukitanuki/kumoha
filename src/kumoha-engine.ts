@@ -204,22 +204,27 @@ export class KumohaEngine {
   userPrefsListener(
     callback: (userPrefs: KumohaThemeUserPrefs) => void
   ): KumohaListener {
-    this.socket.on('data:update-user-prefs', (data) => {
-      const userPrefsThemeName = data[0]?.themeName as string | undefined;
-      const userPrefs = data[1] as KumohaThemeUserPrefs;
-
+    const callbackWithFilter = ({
+      themeName,
+      userPrefs
+    }: {
+      themeName: string | undefined;
+      userPrefs: KumohaThemeUserPrefs;
+    }) => {
       try {
         this._catchAckErrors(userPrefs as Record<string, string>);
       } catch (error) {
         this._handleAckErrors(error);
       }
 
-      if (userPrefsThemeName === this.themeName) {
+      if (themeName === this.themeName) {
         callback(userPrefs);
       }
-    });
+    };
+
+    this.socket.on('data:update-user-prefs', callbackWithFilter);
     return {
-      off: () => this.socket.off('data:update-user-prefs', callback)
+      off: () => this.socket.off('data:update-user-prefs', callbackWithFilter)
     };
   }
 
