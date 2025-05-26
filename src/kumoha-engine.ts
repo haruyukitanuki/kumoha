@@ -24,6 +24,7 @@ type LoginResponse = {
 };
 
 export type KumohaEngineOptions = {
+  themeName?: string;
   socketOptions?: Partial<ManagerOptions & SocketOptions>;
 };
 
@@ -55,6 +56,8 @@ export class KumohaEngine {
   public state: KumohaState = 'disconnected';
   /** @internal */
   public connectionMetadata?: LoginResponse;
+  /** @internal */
+  public themeName?: string;
 
   private _pushClientMeta() {
     const kumohaMeta: KumohaClientMeta = {
@@ -78,7 +81,11 @@ export class KumohaEngine {
     this._pushClientMeta();
   }
 
-  constructor(uri: string, { socketOptions = {} }: KumohaEngineOptions) {
+  constructor(
+    uri: string,
+    { themeName, socketOptions = {} }: KumohaEngineOptions
+  ) {
+    this.themeName = themeName;
     this.socket = io(uri, {
       autoConnect: true,
       extraHeaders: {
@@ -180,10 +187,23 @@ export class KumohaEngine {
     };
   }
 
+  async getUserPrefs(): Promise<KumohaThemeUserPrefs> {
+    const userPrefs = await this.socket.emitWithAck('data:get-user-prefs', {
+      themeName: this.themeName
+    });
+    return userPrefs as KumohaThemeUserPrefs;
+  }
+
   userPrefsListener(
     callback: (userPrefs: KumohaThemeUserPrefs) => void
   ): KumohaListener {
-    this.socket.on('data:user-prefs', callback);
+    this.socket.on('data:user-prefs', (data) => {
+      const userPrefsThemeName = data[0]?.themeName as string | undefined;
+      const userPrefs = data[1] as KumohaThemeUserPrefs;
+      if (userPrefsThemeName === this.themeName) {
+        callback(userPrefs);
+      }
+    });
     return {
       off: () => this.socket.off('data:user-prefs', callback)
     };
