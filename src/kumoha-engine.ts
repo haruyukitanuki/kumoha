@@ -129,34 +129,26 @@ export class KumohaEngine {
     throw error;
   }
 
-  async login(
-    roomId?: string
-  ): Promise<LoginResponse & { userPrefs: KumohaThemeUserPrefs }> {
+  async login(roomId?: string): Promise<LoginResponse> {
     if (roomId) {
       this.humanReadableRoomId = roomId;
     }
 
-    const loginResponse = await this.socket.emitWithAck('auth:login', {
+    const response = await this.socket.emitWithAck('auth:login', {
       trafficRoomId: undefined,
       humanReadableRoomId: this.humanReadableRoomId
     });
 
     try {
-      this._catchAckErrors(loginResponse);
+      this._catchAckErrors(response);
     } catch (error) {
       this._handleAckErrors(error);
     }
 
-    // Fetch theme user prefs
-    const userPrefs = await this.getUserPrefs();
-
     this._setState('ok');
-    this._setConnectionMeta(loginResponse);
+    this._setConnectionMeta(response);
 
-    return {
-      ...loginResponse,
-      userPrefs: userPrefs
-    };
+    return response;
   }
 
   async sendButtonAction(action: string, active: boolean | 'pulse') {
