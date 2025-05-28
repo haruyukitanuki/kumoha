@@ -9,7 +9,7 @@ export default defineConfig({
     emptyOutDir: true,
     outDir: 'dist',
     lib: {
-      name: 'hakataKumoha',
+      name: 'Kumoha',
       entry: resolve(__dirname, 'src/index.ts'),
       fileName: 'index',
       formats: ['es', 'cjs']
