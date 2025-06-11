@@ -198,7 +198,7 @@ export class KumohaEngine {
   }
 
   async getROM(): Promise<KumohaROMDataset> {
-    const romData = await this.socket.emitWithAck('data:rom');
+    const romData = await this.socket.emitWithAck('data:rom', undefined);
 
     try {
       this._catchAckErrors(romData as Record<string, string>);
