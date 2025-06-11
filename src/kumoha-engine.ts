@@ -34,10 +34,11 @@ export type GameDataState = {
   gameData: OpenTetsuData;
   gameState: GameState;
   pluginData: Record<string, PluginState>;
-  rom: {
-    rollingstock: RollingStockROMDataset;
-    route: RouteROMDataset;
-  };
+};
+
+export type KumohaROMDataset = {
+  rollingstock: RollingStockROMDataset;
+  route: RouteROMDataset;
 };
 
 export type KumohaClientMeta = {
@@ -194,6 +195,18 @@ export class KumohaEngine {
         );
       }
     };
+  }
+
+  async getROM(): Promise<KumohaROMDataset> {
+    const romData = await this.socket.emitWithAck('data:rom');
+
+    try {
+      this._catchAckErrors(romData as Record<string, string>);
+    } catch (error) {
+      this._handleAckErrors(error);
+    }
+
+    return romData as KumohaROMDataset;
   }
 
   async getUserPrefs(): Promise<KumohaThemeUserPrefs> {
