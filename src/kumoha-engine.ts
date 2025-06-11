@@ -8,6 +8,8 @@ import { KumohaError } from './errors.js';
 import { type OpenTetsuData } from 'opentetsu';
 import { type GameState } from './types/opentetsu-additions/game-state.js';
 import { type PluginState } from './types/console/plugin-meta.js';
+import type { RollingStockROMDataset } from './types/rom/rollingstock-rom.js';
+import type { RouteROMDataset } from './types/rom/route-rom.js';
 
 export type KumohaState =
   | 'ok'
@@ -32,6 +34,10 @@ export type GameDataState = {
   gameData: OpenTetsuData;
   gameState: GameState;
   pluginData: Record<string, PluginState>;
+  rom: {
+    rollingstock: RollingStockROMDataset;
+    route: RouteROMDataset;
+  };
 };
 
 export type KumohaClientMeta = {
