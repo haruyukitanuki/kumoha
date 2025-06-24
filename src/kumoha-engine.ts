@@ -176,6 +176,24 @@ export class KumohaEngine {
     return response;
   }
 
+  async sendNotch(power: number, brake: number) {
+    const response = await this.socket.emitWithAck('data:post-notch', {
+      power,
+      brake
+    });
+
+    try {
+      this._catchAckErrors(response);
+    } catch (error) {
+      this._handleAckErrors(error);
+    }
+
+    return response as {
+      power: number;
+      brake: number;
+    };
+  }
+
   arisuListener(callback: (data: GameDataState) => void): KumohaListener {
     this.socket.on('data:post', callback);
     return {
