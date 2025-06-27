@@ -173,13 +173,37 @@ export class KumohaEngine {
       this._handleAckErrors(error);
     }
 
-    return response;
+    return response as {
+      action: string;
+      active: boolean | 'pulse';
+    };
   }
 
-  async sendNotch(power: number, brake: number) {
+  async sendReverser(reverser: number) {
+    const response = await this.socket.emitWithAck('data:post-reverser', {
+      reverser
+    });
+
+    try {
+      this._catchAckErrors(response);
+    } catch (error) {
+      this._handleAckErrors(error);
+    }
+
+    return response as {
+      reverser: number;
+    };
+  }
+
+  async sendNotch(
+    power: number,
+    brake: number,
+    type: 'notch' | 'sap' = 'notch'
+  ) {
     const response = await this.socket.emitWithAck('data:post-notch', {
       power,
-      brake
+      brake,
+      type
     });
 
     try {
