@@ -86,6 +86,6 @@ await engine.sendButtonAction('DoorOpn', true);
 ## 💝 サポート
 もし開発支援としてラーメン代を恵んでくださる方がいらっしゃれば、私の[FANBOX](https://haruyukitanuki.fanbox.cc)までぜひ！
 
-[タヌ電 Discordサーバー](https://go.tanu.ch/タヌ電-discord) | [Twitter](https://go.tanu.ch/twitter) | [YouTube](https://go.tanu.ch/tanutube)
+[タヌ電 Discordサーバー](https://go.tanu.ch/tanuden-discord) | [Twitter](https://go.tanu.ch/twitter) | [YouTube](https://go.tanu.ch/tanutube)
 
 **狸河電鉄作品｜Copyright &copy; 2025 Haruyuki Tanukiji.**
