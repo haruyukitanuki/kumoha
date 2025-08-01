@@ -1,6 +1,6 @@
 import { type OpenTetsuData } from 'opentetsu';
 
-export interface PluginMeta {
+export interface PluginConfiguration {
   uid: string;
   name: string;
   version: string;
@@ -9,20 +9,8 @@ export interface PluginMeta {
   __disableTrainCrew?: boolean;
 }
 
-export interface PluginState extends PluginMeta {
-  data?: object;
-  __overrideData?: OpenTetsuData | undefined;
+export interface PluginState extends PluginConfiguration {
+  pluginData?: object;
+  gameData?: OpenTetsuData | undefined;
   lastUpdated?: Date;
-}
-
-export interface PluginToken {
-  uid: string;
-  hashedToken: string;
-}
-
-// Used for API server request body
-export interface PluginData {
-  uid: string;
-  data: object;
-  __overrideData: OpenTetsuData | undefined;
 }
