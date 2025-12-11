@@ -13,6 +13,9 @@
     "format:check": "prettier --config .prettierrc.cjs --check './**/*.{ts,tsx,js,jsx,cjs,json,yml,yaml}'",
     "prepare": "husky"
   },
+  "repository": {
+    "url": "https://github.com/haruyukitanuki/kumoha"
+  },
   "dependencies": {
     "socket.io-client": "^4.8.1"
   },
