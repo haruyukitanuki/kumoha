@@ -11,6 +11,8 @@
 
 [![License](https://img.shields.io/badge/License-LGPL--3.0-388270)](#license)
 
+<p align="center"><b>English</b> | <a href="./README.ja.md">日本語</a></p>
+
 #### About the Name
 
 **Kumoha** is a Japanese railway classification prefix for an electric multiple unit (EMU) car that is both motorized and has a driving cab: **Ku (ク)** = control cab, **Mo (モ)** = traction motors, **Ha (ハ)** = passenger car.
@@ -31,7 +33,7 @@ npm install @tanuden/kumoha @tanuden/rudolf
 import { createKumohaClient, InputAction } from '@tanuden/kumoha';
 
 const kumoha = createKumohaClient('http://localhost:58680', {
-  themeName: '@you/theme-name'
+  themeName: '@author/theme-name'
 });
 
 kumoha.connect();
@@ -74,7 +76,7 @@ declare module '@tanuden/kumoha' {
 }
 ```
 
-## Mock data from a JSON file
+## Mock data
 
 Develop with no console running: hand a JSON fixture to `createMockTransport` and pass the result as the client's `transport`. It acks login, profile, and prefs, then plays the frame(s) on connect, all in memory.
 
@@ -83,7 +85,7 @@ import { createKumohaClient, createMockTransport } from '@tanuden/kumoha';
 import mock from './mock.json';
 
 const transport = createMockTransport(mock, { frameIntervalMs: 100 });
-const kumoha = createKumohaClient('mock', { themeName: '@you/theme-name', transport });
+const kumoha = createKumohaClient('mock', { themeName: '@author/theme-name', transport });
 
 kumoha.connect();
 await kumoha.login();        // reach the 'authenticated' state and load prefs
@@ -162,7 +164,7 @@ The default transport, a thin wrapper over `socket.io-client`. `createKumohaClie
 
 ### MockTransport, createMockTransport
 
-An in-memory transport and its fixture-driven factory, for offline development. See [Mock data from a JSON file](#mock-data-from-a-json-file). `MockTransport` also exposes `respond(event, responder)`, `emit(event, payload)`, and `listenerCount(event)` for scripting a scenario by hand.
+An in-memory transport and its fixture-driven factory, for offline development. `MockTransport` also exposes `respond(event, responder)`, `emit(event, payload)`, and `listenerCount(event)` for scripting a scenario by hand.
 
 ### InputAction, Reverser
 
@@ -170,8 +172,11 @@ Re-exported from `@tanuden/rudolf` so themes get the input vocabulary from one i
 
 ## Open Source @ Tanuden
 
-Kumoha is Open Source Software (OSS), licensed under LGPL-3.0. You may freely distribute, use and modify code provided to you in repository in accordance with it.
+Kumoha is Open Source Software (OSS), licensed under LGPL-3.0. You may freely distribute, use and modify code provided in accordance with it.
 
 A copy of the license can be found at the root of the repository [here](https://github.com/haruyukitanuki/kumoha/blob/main/LICENSE).
+
+> [!IMPORTANT]
+> This repository contains trademarks or logos owned by Tanukigawa Railway. Unauthorized use is prohibited.
 
 **Tanukigawa Railway | Copyright (c) 2026 Haruyuki Tanukiji.**

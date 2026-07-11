@@ -1,11 +1,12 @@
 const js = require('@eslint/js');
 const tseslint = require('typescript-eslint');
 const globals = require('globals');
+const reactHooks = require('eslint-plugin-react-hooks');
 const eslintPluginPrettierRecommended = require('eslint-plugin-prettier/recommended');
 
 module.exports = tseslint.config(
   {
-    ignores: ['dist', 'docs', 'coverage']
+    ignores: ['**/dist', '**/coverage', '**/node_modules', 'docs']
   },
   {
     extends: [js.configs.recommended, ...tseslint.configs.recommended],
@@ -13,19 +14,15 @@ module.exports = tseslint.config(
     languageOptions: {
       ecmaVersion: 2020,
       globals: globals.browser
+    }
+  },
+  {
+    files: ['packages/react/**/*.{ts,tsx}'],
+    plugins: {
+      'react-hooks': reactHooks
     },
-    // plugins: {
-    //   'react-hooks': reactHooks,
-    //   'react-refresh': reactRefresh
-    // },
     rules: {
-      // ...reactHooks.configs.recommended.rules,
-      // 'react-refresh/only-export-components': [
-      //   'warn',
-      //   { allowConstantExport: true }
-      // ],
-      // 'react/react-in-jsx-scope': 'off',
-      // 'react-hooks/exhaustive-deps': 'off'
+      ...reactHooks.configs.recommended.rules
     }
   },
   eslintPluginPrettierRecommended

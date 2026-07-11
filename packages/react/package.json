@@ -1,0 +1,59 @@
+{
+  "name": "@tanuden/kumoha-react",
+  "version": "1.0.0",
+  "description": "React bindings for the Tanuden Kumoha theming engine",
+  "license": "LGPL-3.0-only",
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      },
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      }
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "sideEffects": false,
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "typecheck": "tsc -p tsconfig.json",
+    "check:types": "attw --pack ."
+  },
+  "dependencies": {
+    "use-sync-external-store": "^1.5.0",
+    "zustand": "^5.0.9"
+  },
+  "peerDependencies": {
+    "@tanuden/kumoha": "^1.0.0",
+    "react": "^19",
+    "react-dom": "^19"
+  },
+  "devDependencies": {
+    "@arethetypeswrong/cli": "^0.18.2",
+    "@tanuden/kumoha": "^1.0.0",
+    "@tanuden/rudolf": "^0.1.1",
+    "@types/react": "^19.2.7",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react-swc": "^4.2.2",
+    "react": "^19.2.1",
+    "react-dom": "^19.2.1",
+    "vite": "^7.0.6",
+    "vite-plugin-dts": "^4.5.4"
+  }
+}

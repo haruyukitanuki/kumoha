@@ -1,45 +1,30 @@
 {
-  "name": "@tanuden/kumoha",
-  "version": "0.4.1",
-  "main": "dist/index.js",
-  "type": "module",
-  "description": "Theming Engine API for Tanuden TIMS",
+  "name": "kumoha",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Tanuden Kumoha theming engine — monorepo (Rudolf-native core + React bindings)",
+  "workspaces": [
+    "packages/core",
+    "packages/react"
+  ],
   "scripts": {
-    "dev": "vite",
-    "build": "tsc -b && vite build",
-    "lint": "eslint --fix .",
+    "build": "npm run build -w @tanuden/kumoha && npm run build -w @tanuden/kumoha-react",
+    "typecheck": "npm run typecheck --workspaces --if-present",
+    "lint": "eslint . --fix",
     "lint:check": "eslint .",
     "format": "prettier --config .prettierrc.cjs --write './**/*.{ts,tsx,js,jsx,cjs,json,yml,yaml}'",
     "format:check": "prettier --config .prettierrc.cjs --check './**/*.{ts,tsx,js,jsx,cjs,json,yml,yaml}'",
-    "prepare": "husky"
-  },
-  "dependencies": {
-    "socket.io-client": "^4.8.1"
+    "check:types": "npm run check:types --workspaces --if-present"
   },
   "devDependencies": {
     "@eslint/js": "^9.32.0",
-    "@types/node": "^24.1.0",
     "eslint": "^9.32.0",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-prettier": "^5.5.3",
+    "eslint-plugin-react-hooks": "^5.2.0",
     "globals": "^16.3.0",
-    "husky": "^9.1.7",
-    "lint-staged": "^16.1.2",
-    "opentetsu": "^0.0.9",
     "prettier": "^3.6.2",
     "typescript": "~5.8.3",
-    "typescript-eslint": "^8.38.0",
-    "vite": "^7.0.6",
-    "vite-plugin-dts": "^4.5.4"
-  },
-  "lint-staged": {
-    "**/*.{ts,tsx,js,jsx,cjs,json}": [
-      "npm run format",
-      "npm run format:check"
-    ],
-    "**/*.{ts,tsx,js,jsx,cjs}": [
-      "npm run lint",
-      "npm run lint:check"
-    ]
+    "typescript-eslint": "^8.38.0"
   }
 }
