@@ -1,9 +1,17 @@
 import { useMemo, useRef } from 'react';
-import type { ButtonState, InputAction, Reverser } from '@tanuden/kumoha';
+import type {
+  ButtonState,
+  GameAction,
+  Reverser,
+  VehicleAction
+} from '@tanuden/kumoha';
 import { useKumohaContext } from './use-kumoha-context';
 
 export interface KumohaInputApi {
-  sendButton: (action: InputAction, active: ButtonState) => Promise<void>;
+  sendButton: (
+    action: VehicleAction | GameAction,
+    active: ButtonState
+  ) => Promise<void>;
   sendNotch: (power: number, brake: number) => Promise<void>;
   sendBrakeSap: (kPa: number) => Promise<void>;
   sendReverser: (reverser: Reverser) => Promise<void>;

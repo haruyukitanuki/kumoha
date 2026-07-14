@@ -1,8 +1,9 @@
 import type {
-  InputAction,
+  GameAction,
   OutputDataFrame,
   Reverser,
-  SimulatorProfile
+  SimulatorProfile,
+  VehicleAction
 } from '@tanuden/rudolf';
 
 import { EVENTS } from './utils/events.js';
@@ -178,7 +179,10 @@ export class KumohaClient {
 
   // Cab input. Two-handle notch only (the console has no single-handle path); acks are echoes, not
   // applied-state confirmations.
-  async sendButton(action: InputAction, active: ButtonState): Promise<void> {
+  async sendButton(
+    action: VehicleAction | GameAction,
+    active: ButtonState
+  ): Promise<void> {
     await this._request(EVENTS.button, { action, active });
   }
 

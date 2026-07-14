@@ -9,7 +9,7 @@ export { useKumohaUserPrefs } from './hooks/use-kumoha-user-prefs';
 export { useKumohaInput } from './hooks/use-kumoha-input';
 export { useKumohaLogin } from './hooks/use-kumoha-login';
 export { shallow } from 'zustand/shallow';
-export { InputAction, Reverser } from '@tanuden/kumoha';
+export { GameAction, Reverser, VehicleAction } from '@tanuden/kumoha';
 export { createMockTransport, MockTransport } from '@tanuden/kumoha';
 
 export type { KumohaProviderProps } from './provider';

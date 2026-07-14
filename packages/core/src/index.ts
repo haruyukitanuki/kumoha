@@ -3,7 +3,7 @@ export { emptySnapshot } from './utils/snapshot-store.js';
 export { KumohaError } from './utils/errors.js';
 export { SocketIOTransport, isAckError } from './transport.js';
 export { MockTransport, createMockTransport } from './utils/mock.js';
-export { InputAction, Reverser } from '@tanuden/rudolf';
+export { GameAction, Reverser, VehicleAction } from '@tanuden/rudolf';
 
 export type {
   KnownKumohaErrorReason,
