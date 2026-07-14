@@ -41,6 +41,7 @@
   },
   "peerDependencies": {
     "@tanuden/kumoha": "^1.0.0",
+    "@tanuden/rudolf": ">=0.1.1",
     "react": "^19",
     "react-dom": "^19"
   },
